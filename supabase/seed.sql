@@ -97,3 +97,52 @@ from (
     ('home-decor-gift', 39)
 ) as product_order(slug, sort_order)
 where public.products.slug = product_order.slug;
+
+insert into public.home_slides (
+  title,
+  subtitle,
+  badge,
+  image_url,
+  primary_label,
+  primary_href,
+  secondary_label,
+  secondary_href,
+  sort_order,
+  is_active
+) values
+(
+  'Everything Your Business Needs',
+  'Industrial, commercial, medical, fashion and lifestyle products in one place.',
+  'Trusted by businesses worldwide',
+  null,
+  'Explore Products',
+  '/categories',
+  'Contact Us',
+  '/contact',
+  1,
+  true
+),
+(
+  'Industrial Machinery Solutions',
+  'Reliable machines and commercial equipment for your business.',
+  'Commercial sourcing support',
+  null,
+  'View Machinery',
+  '/categories/industrial-machinery',
+  'Contact Us',
+  '/contact',
+  2,
+  true
+),
+(
+  'Medical Supplies & Reagents',
+  'Trusted medical products and essential reagents.',
+  'Quality products',
+  null,
+  'View Medical Products',
+  '/categories/medical-supplies-reagents',
+  'Contact Us',
+  '/contact',
+  3,
+  true
+);

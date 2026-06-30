@@ -1,10 +1,11 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { categories, products as sampleProducts } from "@/lib/sample-data";
-import type { Product, ProductWithCategory } from "@/lib/types";
+import { categories, homeSlides as sampleHomeSlides, products as sampleProducts } from "@/lib/sample-data";
+import type { HomeSlide, Product, ProductWithCategory } from "@/lib/types";
 
 const dataDir = path.join(process.cwd(), "data");
 const productsFile = path.join(dataDir, "admin-products.json");
+const slidesFile = path.join(dataDir, "home-slides.json");
 const uploadsDir = path.join(process.cwd(), "public", "uploads");
 
 type ProductInput = {
@@ -15,6 +16,19 @@ type ProductInput = {
   image_url: string | null;
   sort_order: number;
   is_featured: boolean;
+};
+
+export type HomeSlideInput = {
+  title: string;
+  subtitle: string | null;
+  badge: string | null;
+  image_url: string | null;
+  primary_label: string;
+  primary_href: string;
+  secondary_label: string | null;
+  secondary_href: string | null;
+  sort_order: number;
+  is_active: boolean;
 };
 
 function attachCategory(product: Product): ProductWithCategory | null {
@@ -44,6 +58,20 @@ async function readProducts(): Promise<Product[]> {
 async function writeProducts(products: Product[]) {
   await mkdir(dataDir, { recursive: true });
   await writeFile(productsFile, `${JSON.stringify(products, null, 2)}\n`, "utf8");
+}
+
+async function readSlides(): Promise<HomeSlide[]> {
+  try {
+    const raw = await readFile(slidesFile, "utf8");
+    return JSON.parse(raw) as HomeSlide[];
+  } catch {
+    return sampleHomeSlides;
+  }
+}
+
+async function writeSlides(slides: HomeSlide[]) {
+  await mkdir(dataDir, { recursive: true });
+  await writeFile(slidesFile, `${JSON.stringify(slides, null, 2)}\n`, "utf8");
 }
 
 export async function getLocalProducts(): Promise<ProductWithCategory[]> {
@@ -108,6 +136,49 @@ export async function toggleLocalProductFeatured(id: string) {
 export async function deleteLocalProduct(id: string) {
   const products = await readProducts();
   await writeProducts(products.filter((product) => product.id !== id));
+}
+
+export async function getLocalHomeSlides({ activeOnly = true } = {}): Promise<HomeSlide[]> {
+  const slides = await readSlides();
+  return slides
+    .filter((slide) => (activeOnly ? slide.is_active : true))
+    .sort((a, b) => a.sort_order - b.sort_order || b.created_at.localeCompare(a.created_at));
+}
+
+export async function createLocalHomeSlide(input: HomeSlideInput) {
+  const slides = await readSlides();
+  const nextSortOrder =
+    input.sort_order > 0 ? input.sort_order : slides.reduce((max, slide) => Math.max(max, slide.sort_order), 0) + 1;
+
+  slides.push({
+    id: crypto.randomUUID(),
+    ...input,
+    sort_order: nextSortOrder,
+    created_at: new Date().toISOString(),
+  });
+
+  await writeSlides(slides);
+}
+
+export async function updateLocalHomeSlide(id: string, input: HomeSlideInput) {
+  const slides = await readSlides();
+  const index = slides.findIndex((slide) => slide.id === id);
+
+  if (index === -1) {
+    throw new Error("Home slide not found.");
+  }
+
+  slides[index] = {
+    ...slides[index],
+    ...input,
+  };
+
+  await writeSlides(slides);
+}
+
+export async function deleteLocalHomeSlide(id: string) {
+  const slides = await readSlides();
+  await writeSlides(slides.filter((slide) => slide.id !== id));
 }
 
 export async function saveLocalUpload(file: File, folder: string, slug: string) {

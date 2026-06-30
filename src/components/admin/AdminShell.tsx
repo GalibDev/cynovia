@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, Tags } from "lucide-react";
+import { Images, LayoutDashboard, Package, Tags } from "lucide-react";
 import { logoutAdmin } from "@/app/admin/actions";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/slides", label: "Home Slider", icon: Images },
   { href: "/admin/categories", label: "Categories", icon: Tags },
   { href: "/admin/products", label: "Products", icon: Package },
 ];

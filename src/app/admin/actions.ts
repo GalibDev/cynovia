@@ -6,9 +6,12 @@ import { clearAdminSession, getAdminPassword, requireAdmin, setAdminSession } fr
 import { getAdminStorageBucket, getAdminSupabase, hasAdminSupabase, slugify } from "@/lib/admin-supabase";
 import {
   createLocalProduct,
+  createLocalHomeSlide,
+  deleteLocalHomeSlide,
   deleteLocalProduct,
   saveLocalUpload,
   toggleLocalProductFeatured,
+  updateLocalHomeSlide,
   updateLocalProduct,
 } from "@/lib/local-catalog";
 
@@ -28,6 +31,7 @@ function revalidateCatalog() {
   revalidatePath("/admin");
   revalidatePath("/admin/categories");
   revalidatePath("/admin/products");
+  revalidatePath("/admin/slides");
 }
 
 async function resolveImageUrl(
@@ -314,4 +318,106 @@ export async function deleteProduct(formData: FormData) {
 
   revalidateCatalog();
   redirect("/admin/products");
+}
+
+function slideInput(formData: FormData, imageUrl: string | null) {
+  const sortOrder = Number(textValue(formData, "sort_order") || "0");
+
+  return {
+    title: textValue(formData, "title"),
+    subtitle: optionalTextValue(formData, "subtitle"),
+    badge: optionalTextValue(formData, "badge"),
+    image_url: imageUrl,
+    primary_label: textValue(formData, "primary_label") || "Explore Products",
+    primary_href: textValue(formData, "primary_href") || "/categories",
+    secondary_label: optionalTextValue(formData, "secondary_label"),
+    secondary_href: optionalTextValue(formData, "secondary_href"),
+    sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
+    is_active: formData.get("is_active") === "on",
+  };
+}
+
+export async function createHomeSlide(formData: FormData) {
+  await requireAdmin();
+
+  const title = textValue(formData, "title");
+
+  if (!title) {
+    throw new Error("Slide title is required.");
+  }
+
+  const imageUrl = await resolveImageUrl(formData, "slides", slugify(title), hasAdminSupabase() ? getAdminSupabase() : undefined);
+  const input = slideInput(formData, imageUrl);
+
+  if (!hasAdminSupabase()) {
+    await createLocalHomeSlide(input);
+    revalidateCatalog();
+    redirect("/admin/slides");
+  }
+
+  const supabase = getAdminSupabase();
+  const { error } = await supabase.from("home_slides").insert(input);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidateCatalog();
+  redirect("/admin/slides");
+}
+
+export async function updateHomeSlide(formData: FormData) {
+  await requireAdmin();
+
+  const id = textValue(formData, "id");
+  const title = textValue(formData, "title");
+
+  if (!id || !title) {
+    throw new Error("Slide id and title are required.");
+  }
+
+  const imageUrl = await resolveImageUrl(formData, "slides", slugify(title), hasAdminSupabase() ? getAdminSupabase() : undefined);
+  const input = slideInput(formData, imageUrl);
+
+  if (!hasAdminSupabase()) {
+    await updateLocalHomeSlide(id, input);
+    revalidateCatalog();
+    redirect("/admin/slides");
+  }
+
+  const supabase = getAdminSupabase();
+  const { error } = await supabase.from("home_slides").update(input).eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidateCatalog();
+  redirect("/admin/slides");
+}
+
+export async function deleteHomeSlide(formData: FormData) {
+  await requireAdmin();
+
+  const id = textValue(formData, "id");
+
+  if (!id) {
+    throw new Error("Slide id is required.");
+  }
+
+  if (!hasAdminSupabase()) {
+    await deleteLocalHomeSlide(id);
+    revalidateCatalog();
+    redirect("/admin/slides");
+  }
+
+  const supabase = getAdminSupabase();
+  const { error } = await supabase.from("home_slides").delete().eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidateCatalog();
+  redirect("/admin/slides");
 }

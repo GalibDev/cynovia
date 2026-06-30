@@ -1,4 +1,4 @@
-import type { Category, ProductWithCategory } from "@/lib/types";
+import type { Category, HomeSlide, ProductWithCategory } from "@/lib/types";
 
 export const categories: Category[] = [
   {
@@ -153,3 +153,48 @@ export const products: ProductWithCategory[] = productRows.map((row, index) => {
     categories: category,
   };
 });
+
+export const homeSlides: HomeSlide[] = [
+  {
+    id: "slide-1",
+    title: "Everything Your Business Needs",
+    subtitle: "Industrial, commercial, medical, fashion and lifestyle products in one place.",
+    badge: "Trusted by businesses worldwide",
+    image_url: null,
+    primary_label: "Explore Products",
+    primary_href: "/categories",
+    secondary_label: "Contact Us",
+    secondary_href: "/contact",
+    sort_order: 1,
+    is_active: true,
+    created_at: "2026-06-12T00:00:00.000Z",
+  },
+  {
+    id: "slide-2",
+    title: "Industrial Machinery Solutions",
+    subtitle: "Reliable machines and commercial equipment for your business.",
+    badge: "Commercial sourcing support",
+    image_url: null,
+    primary_label: "View Machinery",
+    primary_href: "/categories/industrial-machinery",
+    secondary_label: "Contact Us",
+    secondary_href: "/contact",
+    sort_order: 2,
+    is_active: true,
+    created_at: "2026-06-12T00:00:00.000Z",
+  },
+  {
+    id: "slide-3",
+    title: "Medical Supplies & Reagents",
+    subtitle: "Trusted medical products and essential reagents.",
+    badge: "Quality products",
+    image_url: null,
+    primary_label: "View Medical Products",
+    primary_href: "/categories/medical-supplies-reagents",
+    secondary_label: "Contact Us",
+    secondary_href: "/contact",
+    sort_order: 3,
+    is_active: true,
+    created_at: "2026-06-12T00:00:00.000Z",
+  },
+];

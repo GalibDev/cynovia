@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import { categories as sampleCategories } from "@/lib/sample-data";
-import { getLocalProducts } from "@/lib/local-catalog";
-import type { Category, ProductWithCategory } from "@/lib/types";
+import { categories as sampleCategories, homeSlides as sampleHomeSlides } from "@/lib/sample-data";
+import { getLocalHomeSlides, getLocalProducts } from "@/lib/local-catalog";
+import type { Category, HomeSlide, ProductWithCategory } from "@/lib/types";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -114,6 +114,35 @@ export async function getProductBySlug(slug: string): Promise<ProductWithCategor
   }
 
   return data as ProductWithCategory | null;
+}
+
+export async function getHomeSlides({ activeOnly = true } = {}): Promise<HomeSlide[]> {
+  if (!supabase) {
+    await withFallbackDelay();
+    return getLocalHomeSlides({ activeOnly });
+  }
+
+  let query = supabase
+    .from("home_slides")
+    .select("*")
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false });
+
+  if (activeOnly) {
+    query = query.eq("is_active", true);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    if (error.code === "42P01") {
+      return sampleHomeSlides;
+    }
+
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as HomeSlide[];
 }
 
 export async function searchCatalog(query: string) {

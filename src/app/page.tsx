@@ -7,11 +7,11 @@ import { Header } from "@/components/Header";
 import { HeroSlider } from "@/components/HeroSlider";
 import { SectionHeader } from "@/components/SectionHeader";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { getCategories, getProducts } from "@/lib/supabase";
+import { getCategories, getHomeSlides, getProducts } from "@/lib/supabase";
 import type { ProductWithCategory } from "@/lib/types";
 
 export default async function Home() {
-  const [categories, products] = await Promise.all([getCategories(), getProducts()]);
+  const [categories, products, homeSlides] = await Promise.all([getCategories(), getProducts(), getHomeSlides()]);
   const featuredNames = [
     "3-Nozzle Soft Ice Cream Making Machine",
     "Commercial Oven",
@@ -26,9 +26,9 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header categories={categories} />
-      <main className="mx-auto max-w-[1280px] space-y-10 px-4 py-6 sm:px-6 lg:px-6">
-        <HeroSlider />
+      <Header />
+      <main className="mx-auto max-w-[1500px] space-y-10 px-4 py-6 sm:px-6 lg:px-8">
+        <HeroSlider slides={homeSlides} />
         <section>
           <div className="text-center">
             <SectionHeader title="Shop by Category" text="Browse all 11 CYNOVIA catalog groups and contact us for product sourcing inquiries." />

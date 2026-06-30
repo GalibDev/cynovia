@@ -8,7 +8,7 @@ export function Footer({ categories = [] }: { categories?: Category[] }) {
 
   return (
     <footer className="mt-16 border-t border-slate-100 bg-white">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr_1.1fr] lg:px-8">
+      <div className="mx-auto grid max-w-[1500px] gap-8 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.9fr_1fr_1.1fr] lg:px-8">
         <div>
           <Logo />
           <p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">

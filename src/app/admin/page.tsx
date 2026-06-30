@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { Package, Tags, Star } from "lucide-react";
+import { Images, Package, Star, Tags } from "lucide-react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { requireAdmin } from "@/lib/admin-auth";
-import { getCategories, getProducts } from "@/lib/supabase";
+import { getCategories, getHomeSlides, getProducts } from "@/lib/supabase";
 
 export default async function AdminDashboardPage() {
   await requireAdmin();
-  const [categories, products] = await Promise.all([getCategories(), getProducts()]);
+  const [categories, products, slides] = await Promise.all([getCategories(), getProducts(), getHomeSlides({ activeOnly: false })]);
   const featuredCount = products.filter((product) => product.is_featured).length;
 
   const stats = [
+    { label: "Slides", value: slides.length, icon: Images, href: "/admin/slides" },
     { label: "Categories", value: categories.length, icon: Tags, href: "/admin/categories" },
     { label: "Products", value: products.length, icon: Package, href: "/admin/products" },
     { label: "Featured", value: featuredCount, icon: Star, href: "/admin/products" },
@@ -17,7 +18,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <AdminShell>
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
 
@@ -38,6 +39,9 @@ export default async function AdminDashboardPage() {
         <div className="mt-5 flex flex-wrap gap-3">
           <Link href="/admin/categories" className="rounded-lg bg-blue-950 px-5 py-3 text-sm font-bold text-white">
             Manage Categories
+          </Link>
+          <Link href="/admin/slides" className="rounded-lg bg-blue-950 px-5 py-3 text-sm font-bold text-white">
+            Manage Home Slider
           </Link>
           <Link href="/admin/products" className="rounded-lg bg-orange-500 px-5 py-3 text-sm font-bold text-white">
             Manage Products

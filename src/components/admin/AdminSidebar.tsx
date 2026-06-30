@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Box, ChevronsLeft, ChevronsRight, LayoutDashboard, LogOut, Package, Tags } from "lucide-react";
+import { Box, ChevronsLeft, ChevronsRight, Images, LayoutDashboard, LogOut, Package, Tags } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/slides", label: "Home Slider", icon: Images },
   { href: "/admin/categories", label: "Categories", icon: Tags },
   { href: "/admin/products", label: "Products", icon: Package },
 ];
