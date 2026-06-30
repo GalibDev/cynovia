@@ -11,7 +11,7 @@ export function DeleteButton({ label }: { label: string }) {
           event.preventDefault();
         }
       }}
-      className="inline-flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs font-bold text-red-600 transition hover:bg-red-100"
+      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-red-50 px-2.5 py-2 text-xs font-bold text-red-600 transition hover:bg-red-100"
     >
       <Trash2 className="h-4 w-4" /> Delete
     </button>

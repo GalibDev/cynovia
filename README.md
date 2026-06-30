@@ -1,8 +1,8 @@
-# BizMart Catalog Website
+# CYNOVIA Catalog Website
 
-A simple portfolio-style ecommerce catalog for **BizMart / One Stop Business Solution** built with Next.js App Router, TypeScript, Tailwind CSS, and Supabase.
+A simple portfolio-style ecommerce catalog for **CYNOVIA** built with Next.js App Router, TypeScript, Tailwind CSS, and Supabase.
 
-This is intentionally not a cart website. There is no login, checkout, payment, order system, or dashboard. Visitors browse categories and products, then contact BizMart for inquiry.
+This is intentionally not a cart website. There is no login, checkout, payment, order system, or dashboard. Visitors browse categories and products, then contact CYNOVIA for inquiry.
 
 ## Features
 
@@ -44,7 +44,7 @@ Add your Supabase credentials:
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
-SUPABASE_STORAGE_BUCKET=bizmart-images
+SUPABASE_STORAGE_BUCKET=cynovia-images
 ADMIN_PASSWORD=change-this-admin-password
 NEXT_PUBLIC_WHATSAPP_NUMBER=8801XXXXXXXXX
 ```
@@ -82,7 +82,7 @@ The schema creates:
 Both tables have public read policies for anonymous visitors.
 
 The admin panel writes through `SUPABASE_SERVICE_ROLE_KEY`, which must stay server-only. Do not expose it with a `NEXT_PUBLIC_` prefix.
-Image uploads use the public `bizmart-images` storage bucket by default.
+Image uploads use the public `cynovia-images` storage bucket by default.
 
 ## Useful Scripts
 

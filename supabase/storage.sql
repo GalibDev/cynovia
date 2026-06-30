@@ -1,7 +1,7 @@
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
-  'bizmart-images',
-  'bizmart-images',
+  'cynovia-images',
+  'cynovia-images',
   true,
   5242880,
   array['image/png', 'image/jpeg', 'image/webp', 'image/gif']
@@ -11,10 +11,10 @@ set public = excluded.public,
     file_size_limit = excluded.file_size_limit,
     allowed_mime_types = excluded.allowed_mime_types;
 
-drop policy if exists "Allow public BizMart image reads" on storage.objects;
+drop policy if exists "Allow public CYNOVIA image reads" on storage.objects;
 
-create policy "Allow public BizMart image reads"
+create policy "Allow public CYNOVIA image reads"
 on storage.objects
 for select
 to anon
-using (bucket_id = 'bizmart-images');
+using (bucket_id = 'cynovia-images');

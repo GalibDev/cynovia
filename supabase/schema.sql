@@ -19,11 +19,13 @@ create table public.products (
   slug text not null unique,
   description text,
   image_url text,
+  sort_order integer not null default 0,
   is_featured boolean not null default false,
   created_at timestamptz not null default now()
 );
 
 create index products_category_id_idx on public.products(category_id);
+create index products_sort_order_idx on public.products(sort_order asc);
 create index products_created_at_idx on public.products(created_at desc);
 
 alter table public.categories enable row level security;

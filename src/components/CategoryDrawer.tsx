@@ -50,7 +50,7 @@ export function CategoryDrawer({ categories, variant = "primary" }: CategoryDraw
             </span>
             <div>
               <h2 className="font-black text-slate-950">Browse Categories</h2>
-              <p className="text-xs font-semibold text-slate-500">BizMart catalog menu</p>
+              <p className="text-xs font-semibold text-slate-500">CYNOVIA catalog menu</p>
             </div>
           </div>
           <button

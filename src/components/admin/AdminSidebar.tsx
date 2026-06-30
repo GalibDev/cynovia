@@ -34,7 +34,7 @@ export function AdminSidebar({ logoutAction }: { logoutAction: () => void | Prom
             <Box className="h-5 w-5" />
           </span>
           <span className={`min-w-0 transition ${collapsed ? "hidden" : "block"}`}>
-            <span className="block text-xl font-black text-slate-950">BizMart</span>
+            <span className="block text-xl font-black text-slate-950">CYNOVIA</span>
             <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Admin Panel</span>
           </span>
           <span className={`ml-auto text-slate-400 ${collapsed ? "hidden" : "block"}`}>

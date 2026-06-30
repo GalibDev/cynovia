@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BizMart | One Stop Business Solution",
+  title: "CYNOVIA | Global Products. Local Confidence.",
   description: "A professional product and category catalog for industrial, commercial, medical, fashion, home, and gift sourcing.",
 };
 

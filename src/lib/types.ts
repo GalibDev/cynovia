@@ -14,6 +14,7 @@ export type Product = {
   slug: string;
   description: string | null;
   image_url: string | null;
+  sort_order: number;
   is_featured: boolean;
   created_at: string;
   categories?: Category | null;

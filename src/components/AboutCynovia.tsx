@@ -8,14 +8,14 @@ const stats = [
   { value: "10+", label: "Years Experience", icon: MapPinned },
 ];
 
-export function AboutBizMart() {
+export function AboutCynovia() {
   return (
     <section className="grid gap-8 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-50 via-white to-blue-50 p-6 shadow-sm ring-1 ring-slate-100 lg:grid-cols-[1fr_1.1fr] lg:p-10">
       <div>
-        <p className="text-sm font-black uppercase tracking-[0.18em] text-blue-950">About BizMart</p>
+        <p className="text-sm font-black uppercase tracking-[0.18em] text-blue-950">About CYNOVIA</p>
         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950">Your Trusted Business Partner</h2>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
-          BizMart is your one-stop destination for industrial, commercial, medical, fashion and lifestyle products. We
+          CYNOVIA is your trusted destination for industrial, commercial, medical, fashion and lifestyle products. We
           are committed to quality, reliability and customer satisfaction.
         </p>
         <Link

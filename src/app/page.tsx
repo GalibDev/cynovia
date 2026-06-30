@@ -1,4 +1,4 @@
-import { AboutBizMart } from "@/components/AboutBizMart";
+import { AboutCynovia } from "@/components/AboutCynovia";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FeatureStrip } from "@/components/FeatureStrip";
 import { FeaturedProductCarousel } from "@/components/FeaturedProductCarousel";
@@ -31,7 +31,7 @@ export default async function Home() {
         <HeroSlider />
         <section>
           <div className="text-center">
-            <SectionHeader title="Shop by Category" text="Browse all 11 BizMart catalog groups and contact us for product sourcing inquiries." />
+            <SectionHeader title="Shop by Category" text="Browse all 11 CYNOVIA catalog groups and contact us for product sourcing inquiries." />
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {categories.map((category) => (
@@ -46,7 +46,7 @@ export default async function Home() {
           <FeaturedProductCarousel products={featuredProducts} />
         </section>
         <FeatureStrip />
-        <AboutBizMart />
+        <AboutCynovia />
       </main>
       <Footer categories={categories} />
       <WhatsAppButton />

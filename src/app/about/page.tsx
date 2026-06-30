@@ -9,12 +9,12 @@ export default function AboutPage() {
       <Header />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="rounded-2xl bg-gradient-to-br from-sky-50 to-slate-100 p-6 shadow-sm ring-1 ring-black/5 md:p-12">
-          <p className="text-sm font-black uppercase tracking-[0.18em] text-orange-500">About BizMart</p>
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-orange-500">About CYNOVIA</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-black tracking-tight text-slate-950">
-            One Stop Business Solution for sourcing practical products across many industries.
+            Global products with local confidence for sourcing practical products across many industries.
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-8 text-slate-700">
-            BizMart helps businesses explore industrial machinery, food equipment, medical supplies, fashion, home
+            CYNOVIA helps businesses explore industrial machinery, food equipment, medical supplies, fashion, home
             essentials, electronics, kids products, and gift collections from one clean catalog. The website is designed
             for product discovery and direct inquiry, keeping the buying conversation simple and personal.
           </p>
@@ -32,7 +32,7 @@ export default function AboutPage() {
           ))}
         </section>
         <section className="mt-10">
-          <SectionHeader title="Why Businesses Choose BizMart" />
+          <SectionHeader title="Why Businesses Choose CYNOVIA" />
           <FeatureStrip />
         </section>
       </main>

@@ -47,7 +47,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               ))}
             </div>
           ) : (
-            <EmptyState title="No products in this category yet" text="Please contact BizMart for sourcing help in this category." />
+            <EmptyState title="No products in this category yet" text="Please contact CYNOVIA for sourcing help in this category." />
           )}
         </section>
       </main>

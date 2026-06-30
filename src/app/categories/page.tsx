@@ -31,7 +31,7 @@ export default async function CategoriesPage({ searchParams }: CategoriesPagePro
         />
 
         {!hasResults ? (
-          <EmptyState title="No matching catalog items" text="Try another search term or browse all BizMart categories." />
+          <EmptyState title="No matching catalog items" text="Try another search term or browse all CYNOVIA categories." />
         ) : (
           <div className="space-y-10">
             {categories.length > 0 ? (

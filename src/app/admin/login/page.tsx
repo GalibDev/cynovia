@@ -18,7 +18,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
       <form action={loginAdmin} className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
-        <p className="text-sm font-black uppercase tracking-[0.18em] text-orange-500">BizMart Admin</p>
+        <p className="text-sm font-black uppercase tracking-[0.18em] text-orange-500">CYNOVIA Admin</p>
         <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-950">Login</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600">Enter the admin password to manage categories and products.</p>
         {params.error ? (

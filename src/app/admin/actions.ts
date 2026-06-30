@@ -3,7 +3,14 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { clearAdminSession, getAdminPassword, requireAdmin, setAdminSession } from "@/lib/admin-auth";
-import { getAdminStorageBucket, getAdminSupabase, slugify } from "@/lib/admin-supabase";
+import { getAdminStorageBucket, getAdminSupabase, hasAdminSupabase, slugify } from "@/lib/admin-supabase";
+import {
+  createLocalProduct,
+  deleteLocalProduct,
+  saveLocalUpload,
+  toggleLocalProductFeatured,
+  updateLocalProduct,
+} from "@/lib/local-catalog";
 
 function textValue(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -24,16 +31,20 @@ function revalidateCatalog() {
 }
 
 async function resolveImageUrl(
-  supabase: ReturnType<typeof getAdminSupabase>,
   formData: FormData,
   folder: string,
   slug: string,
+  supabase?: ReturnType<typeof getAdminSupabase>,
 ) {
   const imageFile = formData.get("image_file");
 
   if (imageFile instanceof File && imageFile.size > 0) {
     const extension = imageFile.name.split(".").pop()?.toLowerCase() || "png";
     const cleanSlug = slugify(slug) || "image";
+    if (!supabase) {
+      return saveLocalUpload(imageFile, folder, cleanSlug);
+    }
+
     const path = `${folder}/${cleanSlug}-${Date.now()}.${extension}`;
     const bytes = Buffer.from(await imageFile.arrayBuffer());
     const bucket = getAdminStorageBucket();
@@ -81,7 +92,7 @@ export async function createCategory(formData: FormData) {
   }
 
   const supabase = getAdminSupabase();
-  const imageUrl = await resolveImageUrl(supabase, formData, "categories", slug);
+  const imageUrl = await resolveImageUrl(formData, "categories", slug, supabase);
   const { error } = await supabase.from("categories").insert({
     name,
     slug,
@@ -111,7 +122,7 @@ export async function updateCategory(formData: FormData) {
   }
 
   const supabase = getAdminSupabase();
-  const imageUrl = await resolveImageUrl(supabase, formData, "categories", slug);
+  const imageUrl = await resolveImageUrl(formData, "categories", slug, supabase);
   const { error } = await supabase
     .from("categories")
     .update({
@@ -158,19 +169,36 @@ export async function createProduct(formData: FormData) {
   const name = textValue(formData, "name");
   const slug = textValue(formData, "slug") || slugify(name);
   const categoryId = textValue(formData, "category_id");
+  const sortOrder = Number(textValue(formData, "sort_order") || "0");
 
   if (!name || !slug || !categoryId) {
     throw new Error("Product name, slug, and category are required.");
   }
 
+  const imageUrl = await resolveImageUrl(formData, "products", slug, hasAdminSupabase() ? getAdminSupabase() : undefined);
+
+  if (!hasAdminSupabase()) {
+    await createLocalProduct({
+      category_id: categoryId,
+      name,
+      slug,
+      description: optionalTextValue(formData, "description"),
+      image_url: imageUrl,
+      sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
+      is_featured: formData.get("is_featured") === "on",
+    });
+    revalidateCatalog();
+    redirect("/admin/products");
+  }
+
   const supabase = getAdminSupabase();
-  const imageUrl = await resolveImageUrl(supabase, formData, "products", slug);
   const { error } = await supabase.from("products").insert({
     category_id: categoryId,
     name,
     slug,
     description: optionalTextValue(formData, "description"),
     image_url: imageUrl,
+    sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
     is_featured: formData.get("is_featured") === "on",
   });
 
@@ -189,13 +217,30 @@ export async function updateProduct(formData: FormData) {
   const name = textValue(formData, "name");
   const slug = textValue(formData, "slug") || slugify(name);
   const categoryId = textValue(formData, "category_id");
+  const sortOrder = Number(textValue(formData, "sort_order") || "0");
 
   if (!id || !name || !slug || !categoryId) {
     throw new Error("Product id, name, slug, and category are required.");
   }
 
+  const imageUrl = await resolveImageUrl(formData, "products", slug, hasAdminSupabase() ? getAdminSupabase() : undefined);
+
+  if (!hasAdminSupabase()) {
+    await updateLocalProduct(id, {
+      category_id: categoryId,
+      name,
+      slug,
+      description: optionalTextValue(formData, "description"),
+      image_url: imageUrl,
+      sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
+      is_featured: formData.get("is_featured") === "on",
+    });
+    revalidateCatalog();
+    revalidatePath(`/products/${slug}`);
+    redirect("/admin/products");
+  }
+
   const supabase = getAdminSupabase();
-  const imageUrl = await resolveImageUrl(supabase, formData, "products", slug);
   const { error } = await supabase
     .from("products")
     .update({
@@ -204,6 +249,7 @@ export async function updateProduct(formData: FormData) {
       slug,
       description: optionalTextValue(formData, "description"),
       image_url: imageUrl,
+      sort_order: Number.isFinite(sortOrder) ? sortOrder : 0,
       is_featured: formData.get("is_featured") === "on",
     })
     .eq("id", id);
@@ -217,6 +263,33 @@ export async function updateProduct(formData: FormData) {
   redirect("/admin/products");
 }
 
+export async function toggleProductFeatured(formData: FormData) {
+  await requireAdmin();
+
+  const id = textValue(formData, "id");
+  const isFeatured = textValue(formData, "is_featured") === "true";
+
+  if (!id) {
+    throw new Error("Product id is required.");
+  }
+
+  if (!hasAdminSupabase()) {
+    await toggleLocalProductFeatured(id);
+    revalidateCatalog();
+    redirect("/admin/products");
+  }
+
+  const supabase = getAdminSupabase();
+  const { error } = await supabase.from("products").update({ is_featured: !isFeatured }).eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidateCatalog();
+  redirect("/admin/products");
+}
+
 export async function deleteProduct(formData: FormData) {
   await requireAdmin();
 
@@ -224,6 +297,12 @@ export async function deleteProduct(formData: FormData) {
 
   if (!id) {
     throw new Error("Product id is required.");
+  }
+
+  if (!hasAdminSupabase()) {
+    await deleteLocalProduct(id);
+    revalidateCatalog();
+    redirect("/admin/products");
   }
 
   const supabase = getAdminSupabase();

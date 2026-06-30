@@ -147,6 +147,7 @@ export const products: ProductWithCategory[] = productRows.map((row, index) => {
     slug: row[2],
     description: row[3],
     image_url: null,
+    sort_order: index + 1,
     is_featured: index < 8,
     created_at: "2026-06-12T00:00:00.000Z",
     categories: category,

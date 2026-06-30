@@ -2,7 +2,7 @@ import type { Category, ProductWithCategory } from "@/lib/types";
 
 export function contactHref(message?: string) {
   const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
-  const text = encodeURIComponent(message ?? "Hello BizMart, I want to inquire about your products.");
+  const text = encodeURIComponent(message ?? "Hello CYNOVIA, I want to inquire about your products.");
 
   if (!phone) {
     return `/contact?message=${text}`;

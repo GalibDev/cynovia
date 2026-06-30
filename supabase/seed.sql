@@ -51,3 +51,49 @@ insert into public.products (category_id, name, slug, description, image_url, is
 ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Personalized Gifts', 'personalized-gifts', 'Customizable gift options for personal and business occasions.', null, false),
 ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Special Occasion Gifts', 'special-occasion-gifts', 'Gift selections for celebrations, milestones, and seasonal events.', null, false),
 ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Home Decor Gift', 'home-decor-gift', 'Decorative home gift items for warm and thoughtful presentation.', null, false);
+
+update public.products
+set sort_order = product_order.sort_order
+from (
+  values
+    ('automatic-poultry-feed-making-machine', 1),
+    ('commercial-electric-bitter-machine', 2),
+    ('commercial-oven', 3),
+    ('3-nozzle-soft-ice-cream-making-machine', 4),
+    ('commercial-deep-fryer', 5),
+    ('manual-french-fry-slicer', 6),
+    ('bubble-tea-equipment-thailand', 7),
+    ('soft-ice-cream-machines', 8),
+    ('commercial-ovens', 9),
+    ('deep-fryers', 10),
+    ('french-fry-processing-equipment', 11),
+    ('ddf-printer-ink', 12),
+    ('printer-heads', 13),
+    ('able-dialysis-catheter-kit', 14),
+    ('mens-clothing', 15),
+    ('mens-premium-shirt', 16),
+    ('lungi', 17),
+    ('womens-clothing', 18),
+    ('fashion-accessories', 19),
+    ('gamcha-gamsa', 20),
+    ('bedsheets', 21),
+    ('home-textile-gamcha-gamsa', 22),
+    ('kitchen-appliances', 23),
+    ('household-appliances', 24),
+    ('small-electronics', 25),
+    ('kitchen-accessories-product', 26),
+    ('cooking-tools', 27),
+    ('kitchen-gadgets', 28),
+    ('mobile-accessories', 29),
+    ('smart-gadgets', 30),
+    ('electronic-accessories', 31),
+    ('childrens-clothing', 32),
+    ('toys-learning-products', 33),
+    ('baby-essentials', 34),
+    ('corporate-gifts', 35),
+    ('corporate-gift-set', 36),
+    ('personalized-gifts', 37),
+    ('special-occasion-gifts', 38),
+    ('home-decor-gift', 39)
+) as product_order(slug, sort_order)
+where public.products.slug = product_order.slug;

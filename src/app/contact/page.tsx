@@ -13,7 +13,7 @@ export default function ContactPage() {
           <div>
             <p className="text-sm font-black uppercase tracking-[0.18em] text-orange-500">Contact Us</p>
             <h1 className="mt-3 max-w-2xl text-4xl font-black tracking-tight text-slate-950">
-              Send BizMart an inquiry for product details, sourcing, and availability.
+              Send CYNOVIA an inquiry for product details, sourcing, and availability.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-slate-700">
               Share the product name, quantity, preferred origin, and any technical requirements. The team can follow up
@@ -33,7 +33,7 @@ export default function ContactPage() {
                 <Phone className="h-5 w-5 text-blue-950" /> +880 1XXX-XXXXXX
               </p>
               <p className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-blue-950" /> info@bizmart.example
+                <Mail className="h-5 w-5 text-blue-950" /> info@cynovia.example
               </p>
               <p className="flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-blue-950" /> Dhaka, Bangladesh

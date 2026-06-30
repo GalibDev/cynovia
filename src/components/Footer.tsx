@@ -59,7 +59,7 @@ export function Footer({ categories = [] }: { categories?: Category[] }) {
               <Phone className="h-4 w-4 text-blue-950" /> +880 1XXX-XXXXXX
             </p>
             <p className="flex items-center gap-3">
-              <Mail className="h-4 w-4 text-blue-950" /> info@bizmart.example
+              <Mail className="h-4 w-4 text-blue-950" /> info@cynovia.example
             </p>
             <p className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-blue-950" /> Dhaka, Bangladesh
@@ -86,7 +86,7 @@ export function Footer({ categories = [] }: { categories?: Category[] }) {
         </div>
       </div>
       <div className="border-t border-slate-100 py-4 text-center text-xs font-semibold text-slate-500">
-        © 2026 BizMart. One Stop Business Solution.
+        © 2026 CYNOVIA. Global Products. Local Confidence.
       </div>
     </footer>
   );

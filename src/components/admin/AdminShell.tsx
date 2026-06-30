@@ -17,7 +17,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">BizMart Admin</p>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-500">CYNOVIA Admin</p>
               <h1 className="mt-1 text-2xl font-black tracking-tight text-slate-950">Catalog Management</h1>
             </div>
             <div className="flex flex-wrap gap-2">

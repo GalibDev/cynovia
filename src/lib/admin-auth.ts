@@ -2,14 +2,14 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createHash } from "node:crypto";
 
-const ADMIN_COOKIE = "bizmart_admin";
+const ADMIN_COOKIE = "cynovia_admin";
 
 export function getAdminPassword() {
   return process.env.ADMIN_PASSWORD ?? "admin123";
 }
 
 function getAdminToken() {
-  return createHash("sha256").update(`bizmart-admin:${getAdminPassword()}`).digest("hex");
+  return createHash("sha256").update(`cynovia-admin:${getAdminPassword()}`).digest("hex");
 }
 
 export async function isAdminAuthenticated() {

@@ -25,7 +25,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const category = product.categories;
   const tint = categoryVisuals[category.slug]?.tint ?? "from-slate-50 to-slate-100";
   const icon = productIconByCategory[category.slug] ?? "▫️";
-  const inquiryMessage = `Hello BizMart, I want to inquire about ${product.name}.`;
+  const inquiryMessage = `Hello CYNOVIA, I want to inquire about ${product.name}.`;
 
   return (
     <div className="min-h-screen bg-slate-50">

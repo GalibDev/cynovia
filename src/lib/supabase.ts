@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
-import { categories as sampleCategories, products as sampleProducts } from "@/lib/sample-data";
+import { categories as sampleCategories } from "@/lib/sample-data";
+import { getLocalProducts } from "@/lib/local-catalog";
 import type { Category, ProductWithCategory } from "@/lib/types";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -60,12 +61,13 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 export async function getProducts(): Promise<ProductWithCategory[]> {
   if (!supabase) {
     await withFallbackDelay();
-    return sampleProducts;
+    return getLocalProducts();
   }
 
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(*)")
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -78,13 +80,14 @@ export async function getProducts(): Promise<ProductWithCategory[]> {
 export async function getProductsByCategory(categoryId: string): Promise<ProductWithCategory[]> {
   if (!supabase) {
     await withFallbackDelay();
-    return sampleProducts.filter((product) => product.category_id === categoryId);
+    return (await getLocalProducts()).filter((product) => product.category_id === categoryId);
   }
 
   const { data, error } = await supabase
     .from("products")
     .select("*, categories(*)")
     .eq("category_id", categoryId)
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   if (error) {
@@ -97,7 +100,7 @@ export async function getProductsByCategory(categoryId: string): Promise<Product
 export async function getProductBySlug(slug: string): Promise<ProductWithCategory | null> {
   if (!supabase) {
     await withFallbackDelay();
-    return sampleProducts.find((product) => product.slug === slug) ?? null;
+    return (await getLocalProducts()).find((product) => product.slug === slug) ?? null;
   }
 
   const { data, error } = await supabase

@@ -1,5 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 
+export function hasAdminSupabase() {
+  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+}
+
 export function getAdminSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -19,7 +23,7 @@ export function getAdminSupabase() {
 }
 
 export function getAdminStorageBucket() {
-  return process.env.SUPABASE_STORAGE_BUCKET ?? "bizmart-images";
+  return process.env.SUPABASE_STORAGE_BUCKET ?? "cynovia-images";
 }
 
 export function slugify(value: string) {
