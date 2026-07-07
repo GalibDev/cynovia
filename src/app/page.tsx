@@ -1,5 +1,5 @@
 import { AboutCynovia } from "@/components/AboutCynovia";
-import { CategoryCard } from "@/components/CategoryCard";
+import { CategoryProductShowcase } from "@/components/CategoryProductShowcase";
 import { FeatureStrip } from "@/components/FeatureStrip";
 import { FeaturedProductCarousel } from "@/components/FeaturedProductCarousel";
 import { Footer } from "@/components/Footer";
@@ -58,11 +58,7 @@ export default async function Home() {
           <div className="text-center">
             <SectionHeader title="Shop by Category" text="Browse all 11 CYNOVIA catalog groups and contact us for product sourcing inquiries." />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {categories.map((category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))}
-          </div>
+          <CategoryProductShowcase categories={categories} products={products} />
         </section>
         <section>
           <div className="text-center">
