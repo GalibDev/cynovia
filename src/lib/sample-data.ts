@@ -6,7 +6,7 @@ export const categories: Category[] = [
     name: "Industrial Machinery",
     slug: "industrial-machinery",
     description: "Industrial and commercial machines for production, preparation, and daily business operations.",
-    image_url: null,
+    image_url: "/images/products/1781407405982.jpeg",
     sort_order: 1,
   },
   {
@@ -14,7 +14,7 @@ export const categories: Category[] = [
     name: "Food Processing Equipment",
     slug: "food-processing-equipment",
     description: "Commercial food and beverage equipment for cafes, restaurants, and processing lines.",
-    image_url: null,
+    image_url: "/images/products/1781265527362.jpeg",
     sort_order: 2,
   },
   {
@@ -22,7 +22,7 @@ export const categories: Category[] = [
     name: "Medical Supplies & Reagents",
     slug: "medical-supplies-reagents",
     description: "Selected medical supplies, reagents, and healthcare essentials for professional use.",
-    image_url: null,
+    image_url: "/images/products/1782717193173.jpeg",
     sort_order: 3,
   },
   {
@@ -30,7 +30,7 @@ export const categories: Category[] = [
     name: "Printing Supplies",
     slug: "printing-supplies",
     description: "Printer ink, printer heads, and industrial printing supplies.",
-    image_url: null,
+    image_url: "/images/products/1781457361815.jpeg",
     sort_order: 4,
   },
   {
@@ -38,7 +38,7 @@ export const categories: Category[] = [
     name: "Fashion",
     slug: "fashion",
     description: "Everyday apparel, accessories, and textile items for wholesale or retail sourcing.",
-    image_url: null,
+    image_url: "/images/products/1781368026884.jpeg",
     sort_order: 5,
   },
   {
@@ -46,7 +46,7 @@ export const categories: Category[] = [
     name: "Home Textiles",
     slug: "home-textiles",
     description: "Comfortable home textile collections including bedsheets and traditional essentials.",
-    image_url: null,
+    image_url: "/images/products/1782744308829.jpeg",
     sort_order: 6,
   },
   {
@@ -54,7 +54,7 @@ export const categories: Category[] = [
     name: "Home Appliances",
     slug: "home-appliances",
     description: "Reliable home and kitchen appliances for daily household needs.",
-    image_url: null,
+    image_url: "/images/products/1781592153967.jpeg",
     sort_order: 7,
   },
   {
@@ -62,7 +62,7 @@ export const categories: Category[] = [
     name: "Kitchen Accessories",
     slug: "kitchen-accessories",
     description: "Cooking tools, kitchen gadgets, and dining accessories for modern homes and businesses.",
-    image_url: null,
+    image_url: "/images/products/1781508580490.jpeg",
     sort_order: 8,
   },
   {
@@ -70,7 +70,7 @@ export const categories: Category[] = [
     name: "Gadgets & Electronics",
     slug: "gadgets-electronics",
     description: "Mobile accessories, smart gadgets, and practical electronic accessories.",
-    image_url: null,
+    image_url: "/images/products/1783009613418.jpeg",
     sort_order: 9,
   },
   {
@@ -78,7 +78,7 @@ export const categories: Category[] = [
     name: "Kids Corner",
     slug: "kids-corner",
     description: "Children's clothing, toys, learning products, and baby essentials.",
-    image_url: null,
+    image_url: "/images/products/1781689912099.jpeg",
     sort_order: 10,
   },
   {
@@ -86,7 +86,7 @@ export const categories: Category[] = [
     name: "Gift Corner",
     slug: "gift-corner",
     description: "Corporate, personalized, and special occasion gifts for every memorable moment.",
-    image_url: null,
+    image_url: "/images/products/1781838841047.jpeg",
     sort_order: 11,
   },
 ];

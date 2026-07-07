@@ -21,6 +21,14 @@ const withFallbackDelay = async () => {
   }
 };
 
+function withCategoryImageFallback(category: Category): Category {
+  const sampleCategory = sampleCategories.find((item) => item.slug === category.slug);
+  return {
+    ...category,
+    image_url: category.image_url ?? sampleCategory?.image_url ?? null,
+  };
+}
+
 export async function getCategories(): Promise<Category[]> {
   if (!supabase) {
     await withFallbackDelay();
@@ -36,7 +44,7 @@ export async function getCategories(): Promise<Category[]> {
     throw new Error(error.message);
   }
 
-  return data ?? [];
+  return (data ?? []).map(withCategoryImageFallback);
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
@@ -55,7 +63,7 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
     throw new Error(error.message);
   }
 
-  return data;
+  return data ? withCategoryImageFallback(data) : null;
 }
 
 export async function getProducts(): Promise<ProductWithCategory[]> {

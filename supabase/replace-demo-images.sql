@@ -1,3 +1,21 @@
+update public.categories
+set image_url = category_images.image_url
+from (
+  values
+    ('industrial-machinery', '/images/products/1781407405982.jpeg'),
+    ('food-processing-equipment', '/images/products/1781265527362.jpeg'),
+    ('medical-supplies-reagents', '/images/products/1782717193173.jpeg'),
+    ('printing-supplies', '/images/products/1781457361815.jpeg'),
+    ('fashion', '/images/products/1781368026884.jpeg'),
+    ('home-textiles', '/images/products/1782744308829.jpeg'),
+    ('home-appliances', '/images/products/1781592153967.jpeg'),
+    ('kitchen-accessories', '/images/products/1781508580490.jpeg'),
+    ('gadgets-electronics', '/images/products/1783009613418.jpeg'),
+    ('kids-corner', '/images/products/1781689912099.jpeg'),
+    ('gift-corner', '/images/products/1781838841047.jpeg')
+) as category_images(slug, image_url)
+where public.categories.slug = category_images.slug;
+
 delete from public.products;
 
 insert into public.products (category_id, name, slug, description, image_url, sort_order, is_featured)

@@ -10,19 +10,44 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { getCategories, getHomeSlides, getProducts } from "@/lib/supabase";
 import type { ProductWithCategory } from "@/lib/types";
 
+function pickFeaturedProducts(products: ProductWithCategory[]) {
+  const preferredProducts = [...products].sort((a, b) => {
+    if (a.is_featured !== b.is_featured) {
+      return a.is_featured ? -1 : 1;
+    }
+
+    return a.sort_order - b.sort_order;
+  });
+  const selected: ProductWithCategory[] = [];
+  const usedCategories = new Set<string>();
+
+  for (const product of preferredProducts) {
+    if (selected.length >= 8) {
+      break;
+    }
+
+    if (!usedCategories.has(product.category_id)) {
+      selected.push(product);
+      usedCategories.add(product.category_id);
+    }
+  }
+
+  for (const product of preferredProducts) {
+    if (selected.length >= 8) {
+      break;
+    }
+
+    if (!selected.some((item) => item.id === product.id)) {
+      selected.push(product);
+    }
+  }
+
+  return selected;
+}
+
 export default async function Home() {
   const [categories, products, homeSlides] = await Promise.all([getCategories(), getProducts(), getHomeSlides()]);
-  const featuredNames = [
-    "3-Nozzle Soft Ice Cream Making Machine",
-    "Commercial Oven",
-    "ABLE Dialysis Catheter Kit",
-    "DDF Printer Ink",
-    "Men's Premium Shirt",
-    "Corporate Gift Set",
-  ];
-  const featuredProducts = featuredNames
-    .map((name) => products.find((product) => product.name === name))
-    .filter((product): product is ProductWithCategory => Boolean(product));
+  const featuredProducts = pickFeaturedProducts(products);
 
   return (
     <div className="min-h-screen bg-white">
